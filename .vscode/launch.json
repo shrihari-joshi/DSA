@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/shrihari/OneDrive/Desktop/Data_Structures",
-      "program": "c:/Users/shrihari/OneDrive/Desktop/Data_Structures/build/Debug/outDebug",
+      "cwd": "c:/Users/shrihari/OneDrive/Desktop/DSA/C++/DynamicProgramming",
+      "program": "c:/Users/shrihari/OneDrive/Desktop/DSA/C++/DynamicProgramming/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
