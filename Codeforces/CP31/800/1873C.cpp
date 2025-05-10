@@ -1,46 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int targetPractice(vector<vector<char>> &adj)
+int calc(long long n)
 {
-    int score = 0;
-    for (int i = 0; i < 10; i++)
+    int count = 0;
+    while (n > 0)
     {
-        for (int j = 0; j < 10; j++)
-        {
-            if (adj[i][j] == 'X')
-            {
-                if (i == 0 || j == 0 || i == 9 || j == 9)
-                    score += 1;
-                else if (i == 1 || j == 1 || i == 8 || j == 8)
-                    score += 2;
-                else if (i == 2 || j == 2 || i == 7 || j == 7)
-                    score += 3;
-                else if (i == 3 || j == 3 || i == 6 || j == 6)
-                    score += 4;
-                else if (i == 4 || j == 4 || i == 5 || j == 5)
-                    score += 5;
-            }
-        }
+        count += n & 1;
+        n >>= 1;
     }
-    return score;
+    return count;
+}
+int magicalSum(int M, int K, vector<int> &nums)
+{
+    vector<int> prod;
+    int mod = 1e9 + 7;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        long long seq = 0;
+        for (int j = i; j < nums.size() && j < i + M; j++)
+            seq += pow(2, nums[j]);
+
+        int bits = calc(seq);
+        if (bits == K)
+            prod.push_back(seq);
+    }
+    for (int i = 0; i < prod.size(); i++)
+        cout << prod[i] << " ";
+    cout << endl;
+    int ans = 0;
+    for (int i = 0; i < prod.size(); i++)
+    {
+        ans += prod[i] % mod;
+    }
+    return ans;
 }
 
 int main()
 {
-    int tc;
-    cin >> tc;
-    while (tc--)
-    {
-        vector<vector<char>> adj(10, vector<char>(10));
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                cin >> adj[i][j];
-            }
-        }
-        cout << targetPractice(adj) << endl;
-    }
+    // M = 5, K = 5, nums = [1,10,100,10000,1000000]
+    int M = 5, K = 5;
+    vector<int> nums = {1, 10, 100, 10000, 1000000};
+    int result = magicalSum(M, K, nums);
+    cout << "The magical sum is: " << result << endl;
     return 0;
 }

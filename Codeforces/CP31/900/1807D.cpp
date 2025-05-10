@@ -1,45 +1,97 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int oddQueries(vector<int> &arr, int l, int r, int k)
+bool candivide(vector<int> &nums, int k, vector<int> &perm, vector<bool> &used, long long remain)
 {
-    int n = arr.size(), sum = 0;
+    if (perm.size() == nums.size())
+    {
+        return remain == 0;
+    }
 
-    for (int i = 0; i < l - 1; i++)
-        sum += arr[i];
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (!used[i])
+        {
+            used[i] = true;
+            int num = nums[i];
+            int len = to_string(num).length();
+            long long modk = 1;
+            for (int j = 0; j < len; ++j)
+            {
+                modk = (modk * 10) % k;
+            }
+            long long nextremain = (remain * modk + num) % k;
+            perm.push_back(num);
+            if (candivide(nums, k, perm, used, nextremain))
+            {
+                return true;
+            }
+            perm.pop_back();
+            used[i] = false;
+        }
+    }
+    return false;
+}
 
-    for (int i = l - 1; i <= r - 1; i++)
-        sum += k;
+bool findSmallest(vector<int> &nums, int k, vector<int> &perm, vector<bool> &used, long long remain, vector<int> &smallest)
+{
+    if (perm.size() == nums.size())
+    {
+        if (remain == 0)
+        {
+            smallest = perm;
+            return true;
+        }
+        return false;
+    }
 
-    for (int i = r; i < n; i++)
-        sum += arr[i];
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (!used[i])
+        {
+            used[i] = true;
+            int num = nums[i];
+            int len = to_string(num).length();
+            long long modk = 1;
+            for (int j = 0; j < len; ++j)
+            {
+                modk = (modk * 10) % k;
+            }
+            long long nextremain = (remain * modk + num) % k;
+            perm.push_back(num);
+            if (findSmallest(nums, k, perm, used, nextremain, smallest))
+            {
+                return true;
+            }
+            perm.pop_back();
+            used[i] = false;
+        }
+    }
+    return false;
+}
 
-    return sum % 2;
+vector<int> smallestDivisiblePermutation(vector<int> &nums, int k)
+{
+    sort(nums.begin(), nums.end());
+    vector<int> smallest;
+    vector<bool> used(nums.size(), false);
+    vector<int> perm;
+
+    findSmallest(nums, k, perm, used, 0, smallest);
+    return smallest;
 }
 
 int main()
 {
-    int tc;
-    cin >> tc;
-    while (tc--)
+    //  nums = [10,5], k = 10©leetcode
+    vector<int> nums = {10, 5};
+    int k = 10;
+    vector<int> result = smallestDivisiblePermutation(nums, k);
+    for (int num : result)
     {
-        int n, q;
-        cin >> n;
-        cin >> q;
-        vector<int> arr(n);
-        for (int i = 0; i < n; i++)
-            cin >> arr[i];
-        while (q--)
-        {
-            int l, r, k;
-            cin >> l;
-            cin >> r;
-            cin >> k;
-            if (oddQueries(arr, l, r, k) == 1)
-                cout << "YES" << endl;
-            else
-                cout << "NO" << endl;
-        }
+        cout << num << " ";
     }
+    cout << endl;
+
     return 0;
 }

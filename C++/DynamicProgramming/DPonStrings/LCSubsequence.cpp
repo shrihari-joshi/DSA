@@ -29,40 +29,40 @@ int tabu(string &s1, string &s2)
                 dp[ind1][ind2] = max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1]);
         }
     }
-    for (int ind1 = 0; ind1 <= n; ind1++)
-    {
-        for (int ind2 = 0; ind2 <= m; ind2++)
-        {
-            cout << dp[ind1][ind2] << "  ";
-        }
-        cout << endl;
-    }
+    // for (int ind1 = 0; ind1 <= n; ind1++)
+    // {
+    //     for (int ind2 = 0; ind2 <= m; ind2++)
+    //     {
+    //         cout << dp[ind1][ind2] << "  ";
+    //     }
+    //     cout << endl;
+    // }
 
-    int i = n, j = m, len = dp[n][m], index = len - 1;
-    while (i > 0 && j > 0)
-    {
-        if (s1[i - 1] == s2[j - 1])
-        {
-            temp[index] = s1[i - 1];
-            index--;
-            i--;
-            j--;
-        }
-        else
-        {
-            if (dp[i - 1][j] > dp[i][j - 1])
-                i--;
-            else if (dp[i - 1][j] < dp[i][j - 1])
-                j--;
-            else
-            {
-                i--;
-                j--;
-            }
-        }
-    }
+    // int i = n, j = m, len = dp[n][m], index = len - 1;
+    // while (i > 0 && j > 0)
+    // {
+    //     if (s1[i - 1] == s2[j - 1])
+    //     {
+    //         temp[index] = s1[i - 1];
+    //         index--;
+    //         i--;
+    //         j--;
+    //     }
+    //     else
+    //     {
+    //         if (dp[i - 1][j] > dp[i][j - 1])
+    //             i--;
+    //         else if (dp[i - 1][j] < dp[i][j - 1])
+    //             j--;
+    //         else
+    //         {
+    //             i--;
+    //             j--;
+    //         }
+    //     }
+    // }
 
-    cout << temp << endl;
+    // cout << temp << endl;
     return dp[n][m];
 }
 int space(string &s1, string &s2)
