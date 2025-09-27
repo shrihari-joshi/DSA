@@ -18,7 +18,7 @@ vector<int> dijkstra(vector<vector<pair<int, int>>> &adj, int src)
 
         for (auto it : adj[node])
         {
-
+  
             if (dis[it.first] > d + it.second)
             {
                 dis[it.first] = d + it.second;

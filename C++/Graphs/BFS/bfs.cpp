@@ -10,7 +10,7 @@ vector<int> bfsOfGraph(vector<vector<int>> &adj)
     visited[0] = 1;
 
     while (!q.empty())
-    {
+    {  
         int node = q.front();
         bfs.push_back(node);
         q.pop();

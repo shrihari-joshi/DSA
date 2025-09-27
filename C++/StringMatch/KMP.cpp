@@ -1,44 +1,48 @@
-#include <iostream>
-#include <string>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> computePrefixFunction(const string& pattern) {
+vector<int> computeLPS(string pattern)
+{
     int m = pattern.size();
-    int q=0;
-    vector<int> temp(m,0);
-    for(int i=1;i<m;i++)
-    {
-        while(q>0 && pattern[q] != pattern[i])
-            q = temp[q-1];
-        if(pattern[q] == pattern[i])
-            q++;
-        temp[i] = q;
-    }
-    return temp;
+    int len = 0, i = 1;
+    vector<int> LPS;
+    LPS[0] = 0;
+    for (int i = 0; i < m; i++)
 }
 
-void kmpSearch(const string& text, const string& pattern) {
-    int m = pattern.size();
-    int n = text.size();
-    vector<int> prefix = computePrefixFunction(pattern);
-    int q=0;
-    for(int i=0;i<n;i++)
+vector<int> KMP(string text, string pattern)
+{
+    vector<int> LPS = computeLPS(pattern);
+    vector<int> res;
+    int n = text.size(), m = pattern.size();
+    int i = 0, j = 0;
+    while (i < n)
     {
-        while(q>0 && pattern[q] != text[i])
-            q = prefix[q-1];
-        if(pattern[q] == text[i])
-            q++;
-        if(q==m){
-            cout<< "found at " << i - m + 1 << endl ;
+        if (text[i] == pattern[j])
+        {
+            i++;
+            j++;
+        }
+        else if (j > 0)
+            j = LPS[j - 1];
+        else
+            i++;
+
+        if (j == m)
+        {
+            res.push_back(i - j);
+            j = LPS[j - 1];
         }
     }
-
+    return res;
 }
 
-int main() {
-    string text = "lalitlalitlalitlalitlalitlalitlalit";
-    string pattern = "lalit";
-    kmpSearch(text, pattern);
-    return 0;
+int main()
+{
+    string text = "abcabcdabcd";
+    string pattern = "abcd";
+    vector<int> res = KMP(text, pattern);
+    cout << "Indices: ";
+    for (auto it : res)
+        cout << it << " ";
 }

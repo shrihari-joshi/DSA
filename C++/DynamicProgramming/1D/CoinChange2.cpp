@@ -70,8 +70,8 @@ int coinChange(vector<int> &coins, int amount)
 
 int main()
 {
-	vector<int> coins = {1, 2, 3};
-	int amount = 11;
+	vector<int> coins = {1, 2, 5};
+	int amount = 5;
 	// 	vector<int> coins = {2};
 	// 	int amount = 3;
 	// vector<int> coins = {411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422};
